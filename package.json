@@ -1,0 +1,32 @@
+{
+  "name": "spendwise-lab",
+  "version": "1.0.0",
+  "description": "Expense tracking system",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "keywords": [
+    "expense",
+    "tracker",
+    "budget"
+  ],
+  "author": "ShvydkoKristina",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.3.2",
+    "uuid": "^9.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ak-ake/SpendWise-Lab.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ak-ake/SpendWise-Lab/issues"
+  },
+  "homepage": "https://github.com/ak-ake/SpendWise-Lab#readme"
+}

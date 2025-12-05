@@ -94,6 +94,25 @@ SpendWise-Lab is a focused, research-style web app that helps learners and devel
 
 ## Getting Started
 
+## Quick Setup for JavaScript Version
+
+If you want to run the pure JavaScript/Node.js version:
+
+```bash
+# Initialize the project
+npm init -y
+
+# Install dependencies
+npm install uuid fs-extra chalk
+
+# Create the project structure
+mkdir -p data
+
+# Create the JavaScript files (copy the code above)
+
+# Run the application
+npm start
+
 ### Prerequisites
 
 * Node.js v18+ and npm/yarn
@@ -232,14 +251,3 @@ Built as part of learning labs — thanks to the open-source community and the m
 
 ---
 
-## Quick Checklist for a Polished README (Lab Instructor)
-
-* [ ] Replace badge links (`your-username`) with actual values.
-* [ ] Capture and add a real animated GIF of the app in use.
-* [ ] Add sample CSVs to `data/samples/` and link them here.
-* [ ] Add CI badge URL after setting up Actions/workflows.
-* [ ] Link to a live preview (Vercel/GitHub Pages) when available.
-
----
-
-> Need it exported as a `README.md` file or a `docx`? Tell me which format and I'll prepare it for download.

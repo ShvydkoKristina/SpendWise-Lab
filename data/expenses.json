@@ -1,0 +1,116 @@
+{
+  "expenses": [
+    {
+      "id": "c2d02dd3-d5fb-42e8-8519-21f94d086c8c",
+      "date": "2025-10-01",
+      "amount": 999,
+      "category": {
+        "id": 1,
+        "name": "Їжа",
+        "color": "#4CAF50"
+      },
+      "description": "Обід у ресторані",
+      "createdAt": "2025-12-05T08:17:06.466Z"
+    },
+    {
+      "id": "b735cda4-8ec3-4856-99ec-739ff335ac47",
+      "date": "2025-10-03",
+      "amount": 300,
+      "category": {
+        "id": 3,
+        "name": "Розваги",
+        "color": "#9C27B0"
+      },
+      "description": "Кіно",
+      "createdAt": "2025-12-05T08:17:06.467Z"
+    },
+    {
+      "id": "5caa2a56-54d7-4eb6-8d81-dcd6037d7d82",
+      "date": "2025-10-04",
+      "amount": 1200,
+      "category": {
+        "id": 4,
+        "name": "Комунальні",
+        "color": "#FF9800"
+      },
+      "description": "Комунальні послуги",
+      "createdAt": "2025-12-05T08:17:06.467Z"
+    },
+    {
+      "id": "612813d0-afa8-48eb-a694-d13d6fdc672e",
+      "date": "2025-10-05",
+      "amount": 500,
+      "category": {
+        "id": 5,
+        "name": "Шопінг",
+        "color": "#E91E63"
+      },
+      "description": "Одяг",
+      "createdAt": "2025-12-05T08:17:06.467Z"
+    },
+    {
+      "id": "73212c0b-6168-4eef-a303-a0f960882326",
+      "date": "2025-10-06",
+      "amount": 80,
+      "category": {
+        "id": 1,
+        "name": "Їжа",
+        "color": "#4CAF50"
+      },
+      "description": "Продукти",
+      "createdAt": "2025-12-05T08:17:06.467Z"
+    },
+    {
+      "id": "52149b06-0f55-498a-bfd1-7da6120545c7",
+      "date": "2025-10-07",
+      "amount": 60,
+      "category": {
+        "id": 2,
+        "name": "Транспорт",
+        "color": "#2196F3"
+      },
+      "description": "Таксі",
+      "createdAt": "2025-12-05T08:17:06.467Z"
+    },
+    {
+      "id": "634c9366-01e4-4e8d-8aca-fe25d2f56771",
+      "date": "2025-10-08",
+      "amount": 200,
+      "category": {
+        "id": 1,
+        "name": "Їжа",
+        "color": "#4CAF50"
+      },
+      "description": "Нова витрата",
+      "createdAt": "2025-12-05T08:17:06.524Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Їжа",
+      "color": "#4CAF50"
+    },
+    {
+      "id": 2,
+      "name": "Транспорт",
+      "color": "#2196F3"
+    },
+    {
+      "id": 3,
+      "name": "Розваги",
+      "color": "#9C27B0"
+    },
+    {
+      "id": 4,
+      "name": "Комунальні",
+      "color": "#FF9800"
+    },
+    {
+      "id": 5,
+      "name": "Шопінг",
+      "color": "#E91E63"
+    }
+  ],
+  "lastUpdated": "2025-12-05T08:17:06.532Z"
+}
