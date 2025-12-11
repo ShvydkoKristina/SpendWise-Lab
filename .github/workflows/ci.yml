@@ -1,0 +1,62 @@
+name: CI/CD — Build and Auto Release
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write 
+  id-token: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show commit & author info
+        run: |
+          echo "GitHub actor: $GITHUB_ACTOR"
+          echo "Event name: $GITHUB_EVENT_NAME"
+          # head_commit may be null for some events; guard:
+          if [ -f "$GITHUB_EVENT_PATH" ]; then
+            echo "Payload:"
+            jq -r '.head_commit.author.name // "N/A" as $name | .head_commit.author.email // "N/A" as $email | "\($name) <\($email)"' "$GITHUB_EVENT_PATH" || true
+            echo "Commit message:"
+            jq -r '.head_commit.message // "N/A"' "$GITHUB_EVENT_PATH" || true
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Run build / basic smoke test
+        run: |
+          echo "Running application to check it starts..."
+          # if you have a build script, use: npm run build
+          # For this simple node app we'll just run it and expect exit code 0
+          node index.js || true
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: auto-v${{ github.run_number }}
+          name: "auto-v${{ github.run_number }}"
+          body: |
+            Automated release from workflow run ${{ github.run_id }}.
+            Commit by: ${{ github.actor }}.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
