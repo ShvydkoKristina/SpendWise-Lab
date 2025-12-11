@@ -4,7 +4,10 @@ on:
   push:
     branches:
       - main
-  pull_request:
+
+permissions:
+  contents: write   
+  packages: write
 
 jobs:
   build:
@@ -29,24 +32,21 @@ jobs:
 
       - name: Run index.js
         run: node index.js
+      - name: Archive repo
+        run: zip -r repo.zip . -x ".git/*"
 
       - name: Create GitHub Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: v1.0.${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
-          draft: false
-          prerelease: false
-
-      - name: Upload index.js to release
-        uses: actions/upload-release-asset@v1
+          name: Release ${{ github.run_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./index.js
-          asset_name: index.js
-          asset_content_type: text/javascript
+          files: repo.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
