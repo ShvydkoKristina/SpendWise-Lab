@@ -1,9 +1,10 @@
 name: CI
 
+# Workflow запускається тільки при пуші тегів виду vX.Y.Z
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*'
 
 permissions:
   contents: write
@@ -14,44 +15,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Отримуємо код репо
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      # 2️⃣ Показуємо автора останнього коміту
       - name: Show commit author
         run: |
           echo "Commit author:"
           git log -1 --pretty=format:'%an <%ae>'
 
+      # 3️⃣ Встановлюємо Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
+      # 4️⃣ Встановлюємо залежності
       - name: Install dependencies
         run: npm install || true
 
+      # 5️⃣ Запускаємо index.js для перевірки
       - name: Run index.js
         run: node index.js
 
+      # 6️⃣ Створюємо архів з усім репозиторієм (крім .git)
       - name: Archive repo
         run: zip -r repo.zip . -x ".git/*"
 
-      - name: Create tag
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag -a v1.0.${GITHUB_RUN_NUMBER} -m "Release $GITHUB_RUN_NUMBER"
-          git push origin v1.0.${GITHUB_RUN_NUMBER}
-
+      # 7️⃣ Створюємо реліз на основі тегу
       - name: Create GitHub Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          name: Release ${{ github.run_number }}
+          tag_name: ${{ github.ref_name }}   # тег з push
+          name: Release ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # 8️⃣ Завантажуємо архів у реліз
       - name: Upload release asset
         uses: softprops/action-gh-release@v1
         with:
