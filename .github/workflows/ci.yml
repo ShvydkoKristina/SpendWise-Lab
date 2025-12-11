@@ -1,11 +1,10 @@
-name: SpendWise CI/CD
+name: CI
 
 on:
   push:
     branches:
       - main
-      - master
-      - dev
+  pull_request:
 
 jobs:
   build:
@@ -13,47 +12,15 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Show commit author
-        run: |
-          echo "Автор коміту:"
-          echo "${{ github.actor }}"
-          echo "Email: ${{ github.event.pusher.email }}"
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: "20"
-          
-      - name: Skip npm install
-        run: echo "No package.json → skipping npm install"
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install || true
 
       - name: Run index.js
         run: node index.js
-
-  release:
-  runs-on: ubuntu-latest
-  needs: build
-
-  steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
-
-    - name: Generate tag
-      id: tagger
-      run: |
-        TAG="v1.0.0-${GITHUB_SHA::7}"
-        echo "tag=$TAG" >> $GITHUB_OUTPUT
-
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: ${{ steps.tagger.outputs.tag }}
-        name: "Автоматичний реліз ${{ steps.tagger.outputs.tag }}"
-        body: |
-          Автоматично створений реліз CI/CD.
-          Коміт: ${{ github.sha }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
