@@ -4,7 +4,7 @@ const DatabaseManager = require("./DatabaseManager");
 const Statistics = require("./Statistics");
 
 console.log("--- SpendWise System Started ---");
-
+console.log("CI test run");
 const db = new DatabaseManager();
 const stats = new Statistics(db);
 
