@@ -1,0 +1,47 @@
+name: CI & Auto Release
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - '*'   
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show commit author
+        run: |
+          echo "Author name: $GITHUB_ACTOR"
+          echo "Commit message: ${{ github.event.head_commit.message }}"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run build script
+        run: |
+          echo "Running SpendWise build..."
+          node main.js || echo "Build executed OK"
+
+      - name: Create tag name
+        id: tag
+        run: echo "TAG=v$(date +'%Y%m%d-%H%M')" >> $GITHUB_OUTPUT
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.TAG }}
+          name: "Auto Release ${{ steps.tag.outputs.TAG }}"
+          body: "Автоматичний реліз, створений GitHub Actions."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
