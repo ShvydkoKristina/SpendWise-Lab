@@ -14,6 +14,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: Show commit author
+        run: |
+          echo "Commit author:"
+          git log -1 --pretty=format:'%an <%ae>'
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -24,3 +29,24 @@ jobs:
 
       - name: Run index.js
         run: node index.js
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Upload index.js to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./index.js
+          asset_name: index.js
+          asset_content_type: text/javascript
