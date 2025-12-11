@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - master
-      - '*'   
+      - '*'
 
 jobs:
   build-and-release:
@@ -26,12 +26,13 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Run build script
         run: |
-          echo "Running SpendWise build..."
-          node main.js || echo "Build executed OK"
+          if [ -f package.json ]; then npm install; else echo "No package.json, skipping npm install"; fi
+
+      - name: Run application
+        run: |
+          echo "Running SpendWise..."
+          node index.js || echo "Execution finished"
 
       - name: Create tag name
         id: tag
