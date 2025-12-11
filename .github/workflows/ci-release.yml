@@ -7,6 +7,9 @@ on:
       - master
       - '*'
 
+permissions:
+  contents: write    # <-- Дозволяємо створювати релізи
+
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
@@ -17,22 +20,22 @@ jobs:
 
       - name: Show commit author
         run: |
-          echo "Author name: $GITHUB_ACTOR"
+          echo "Author: $GITHUB_ACTOR"
           echo "Commit message: ${{ github.event.head_commit.message }}"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
 
       - name: Install dependencies
         run: |
-          if [ -f package.json ]; then npm install; else echo "No package.json, skipping npm install"; fi
+          if [ -f package.json ]; then npm install; else echo "No package.json found"; fi
 
       - name: Run application
         run: |
-          echo "Running SpendWise..."
-          node index.js || echo "Execution finished"
+          echo "Running SpendWise index.js..."
+          node index.js || echo "Execution completed."
 
       - name: Create tag name
         id: tag
